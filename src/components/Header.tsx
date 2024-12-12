@@ -10,7 +10,7 @@ export default function Header() {
       <nav className="container mx-auto px-4 py-4 flex items-center justify-between">
         <div className="flex items-center space-x-2">
           <Volleyball className="w-8 h-8 text-emerald-600" />
-          <span className="text-xl font-bold text-gray-800">FieldFinder</span>
+          <span className="text-xl font-bold text-gray-800">ChadSa3a</span>
         </div>
         
         <div className="hidden md:flex items-center space-x-8">
