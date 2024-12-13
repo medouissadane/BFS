@@ -10,7 +10,6 @@ import Footer from './components/Footer.tsx';
 import SignUp from './components/signUp.tsx';
 import Login from './components/login.tsx';
 
-import './App.css';
 
 function HomePage() {
   return (

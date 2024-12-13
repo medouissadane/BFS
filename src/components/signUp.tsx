@@ -25,6 +25,7 @@ export default function SignUp() {
       toast.error(message);
     } finally {
       setIsLoading(false);
+      
     }
   };
 
