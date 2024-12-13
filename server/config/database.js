@@ -1,35 +1,26 @@
-import mysql from 'mysql2/promise';
+import { Sequelize } from 'sequelize';
 import dotenv from 'dotenv';
 
-// Load environment variables from .env file
+// Load environment variables
 dotenv.config();
 
-// Database connection configuration
-const dbConfig = {
-    host: process.env.DB_HOST || 'localhost',
-    user: process.env.DB_USER || 'root',
-    password: process.env.DB_PASSWORD || '',
-    database: process.env.DB_NAME || 'stadium_booking',
-    waitForConnections: true,
-    connectionLimit: 10,
-    queueLimit: 0,
-};
+export const sequelize = new Sequelize(
+    process.env.DB_NAME || 'stadium_booking',
+    process.env.DB_USER || 'root',
+    process.env.DB_PASSWORD || '',
+    {
+        host: process.env.DB_HOST || 'localhost',
+        dialect: 'mysql',
+        logging: false,
+    }
+);
 
-
-const pool = mysql.createPool(dbConfig);
-
-
-export const db = pool;
-
-
+// Test Connection
 export async function testConnection() {
     try {
-        const connection = await pool.getConnection();
+        await sequelize.authenticate();
         console.log('Database connection successful');
-        connection.release();
     } catch (error) {
         console.error('Database connection failed:', error.message);
-
     }
 }
-
