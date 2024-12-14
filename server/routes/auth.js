@@ -1,6 +1,12 @@
 import express from 'express';
 import bcrypt from 'bcrypt';
 import { User } from '../models/User.js';
+import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
+
+
+dotenv.config();
+
 
 const router = express.Router();
 
@@ -32,6 +38,41 @@ router.post('/signup', async (req, res) => {
     } catch (error) {
         console.error('Error during user signup:', error);
         res.status(500).json({ message: 'Server error. Please try again later.' });
+    }
+});
+
+// login route
+router.post('/login', async (req, res) => {
+    try {
+        const { email, password } = req.body;
+
+        const user = await User.findOne({ where: { email } });
+        if (!user) {
+            return res.status(401).json({ message: 'Invalid credentials' });
+        }
+
+        const isMatch = await bcrypt.compare(password, user.password);
+        if (!isMatch) {
+            return res.status(401).json({ message: 'Invalid credentials' });
+        }
+
+        const token = jwt.sign(
+            { userId: user.id },
+            process.env.JWT_SECRET,
+            { expiresIn: '2h' }
+        );
+
+        res.json({
+            user: {
+                id: user.id,
+                name: user.name,
+                email: user.email
+            },
+            token
+        });
+    } catch (error) {
+        console.error('Login error:', error);
+        res.status(500).json({ message: 'Server error', error: error.message });
     }
 });
 

@@ -9,6 +9,7 @@ import CTA from './components/CTA.tsx';
 import Footer from './components/Footer.tsx';
 import SignUp from './components/signUp.tsx';
 import Login from './components/login.tsx';
+import Home from "./components/home.tsx";
 
 
 function HomePage() {
@@ -37,6 +38,7 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/home" element={<Home />} />
         </Routes>
       </div>
     </Router>
